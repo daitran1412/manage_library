@@ -1,13 +1,13 @@
-package com.nashtech.nmanage_library;
+package com.nashtech.manage_library;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class NmanageLibraryApplication {
+public class ManageLibraryApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(NmanageLibraryApplication.class, args);
+		SpringApplication.run(ManageLibraryApplication.class, args);
 	}
 
 }
