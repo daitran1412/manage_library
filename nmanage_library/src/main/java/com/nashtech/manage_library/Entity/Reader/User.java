@@ -15,8 +15,8 @@ public class User {
     @Column(name = "id")
     private String id;
 
-    @Column(name = "fullname")
-    private String fullname;
+    @Column(name = "username")
+    private String username;
 
     @Column(name = "email")
     private String email;
@@ -30,9 +30,9 @@ public class User {
     public User() {
     }
 
-    public User(String id, String fullname, String email, String phone, String address) {
+    public User(String id, String username, String email, String phone, String address) {
         this.id = id;
-        this.fullname = fullname;
+        this.username = username;
         this.email = email;
         this.phone = phone;
         this.address = address;
@@ -46,12 +46,12 @@ public class User {
         this.id = id;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getUsername() {
+        return username;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {

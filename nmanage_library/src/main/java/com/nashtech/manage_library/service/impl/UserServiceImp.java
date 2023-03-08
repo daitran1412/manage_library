@@ -43,7 +43,7 @@ public class UserServiceImp implements UserService {
     @Override
     public User updateUser(User user) {
         User existingUser = userRepository.findById(user.getId()).orElse(null);
-        existingUser.setFullname(user.getFullname());
+        existingUser.setUsername(user.getUsername());
         existingUser.setEmail(user.getEmail());
         existingUser.setPhone(user.getPhone());
         existingUser.setAddress(user.getAddress());

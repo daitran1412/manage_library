@@ -3,7 +3,7 @@ package com.nashtech.manage_library.dto.Reader;
 public class UserDto {
     
     private String id;
-    private String fullname;
+    private String username;
     private String email;
     private String phone;
     private String address;
@@ -11,9 +11,9 @@ public class UserDto {
     public UserDto() {
     }
 
-    public UserDto(String id, String fullname, String email, String phone, String address) {
+    public UserDto(String id, String username, String email, String phone, String address) {
         this.id = id;
-        this.fullname = fullname;
+        this.username = username;
         this.email = email;
         this.phone = phone;
         this.address = address;
@@ -23,8 +23,8 @@ public class UserDto {
         return id;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getUsername() {
+        return username;
     }
 
     public String getEmail() {
@@ -43,8 +43,8 @@ public class UserDto {
         this.id = id;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setEmail(String email) {
