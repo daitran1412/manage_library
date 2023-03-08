@@ -13,13 +13,10 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private String id;
 
-    @Column(name = "username")
-    private String username;
-
-    @Column(name = "password")
-    private String password;
+    @Column(name = "fullname")
+    private String fullname;
 
     @Column(name = "email")
     private String email;
@@ -30,44 +27,31 @@ public class User {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "role")
-    private String role;
-
     public User() {
     }
 
-    public User(int id, String username, String password, String email, String phone, String address, String role) {
+    public User(String id, String fullname, String email, String phone, String address) {
         this.id = id;
-        this.username = username;
-        this.password = password;
+        this.fullname = fullname;
         this.email = email;
         this.phone = phone;
         this.address = address;
-        this.role = role;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getEmail() {
@@ -94,11 +78,4 @@ public class User {
         this.address = address;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 }

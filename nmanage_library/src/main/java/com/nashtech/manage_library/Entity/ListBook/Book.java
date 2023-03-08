@@ -35,6 +35,12 @@ public class Book {
     @Column(name = "quantity")
     private int quantity;
 
+    @Column(name = "status")
+    private String status;
+
+    @Column(name = "image")
+    private String image;
+
     public Book() {
     }
 
@@ -102,6 +108,22 @@ public class Book {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
 }
