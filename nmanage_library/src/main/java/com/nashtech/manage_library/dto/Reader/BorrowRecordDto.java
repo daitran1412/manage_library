@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class BorrowRecordDto {
     
-    private String id;
+    private Long id;
     private String user;
     private String book;
     private String borrowDate;

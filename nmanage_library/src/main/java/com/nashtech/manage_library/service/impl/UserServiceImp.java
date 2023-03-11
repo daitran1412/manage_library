@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nashtech.manage_library.Entity.Reader.User;
-import com.nashtech.manage_library.repository.UserRepository;
+import com.nashtech.manage_library.repository.Reader.UserRepository;
 import com.nashtech.manage_library.service.UserService;
 
 @Service
@@ -21,12 +21,12 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public User getUserById(String id) {
+    public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
 
     @Override
-    public User getUserByUsername(String username) {
+    public List<User> getUserListByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
@@ -51,7 +51,7 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void deleteUser (String id){
+    public void deleteUser (Long id){
         userRepository.deleteById(id);
     }
 

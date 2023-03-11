@@ -1,4 +1,4 @@
-package com.nashtech.manage_library.controller;
+package com.nashtech.manage_library.controller.Reader;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +34,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping("/get")
     public List<UserDto> getAllUsers() {
         List<User> users = userService.getAllUsers();
         List<UserDto> userDtos = users.stream().map(user -> modelMapper.map(user, UserDto.class))
@@ -42,28 +42,28 @@ public class UserController {
         return userDtos;
     }
 
-    @GetMapping("/get/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable(value = "id") String userId) {
+    @GetMapping("/get/id/{id}")
+    public ResponseEntity<UserDto> getUserById(@PathVariable(value = "id") Long userId) {
         User user = userService.getUserById(userId);
         UserDto userDto = modelMapper.map(user, UserDto.class);
         return ResponseEntity.ok().body(userDto);
     }
 
-    @GetMapping("/get/{fullname}")
-    public ResponseEntity<UserDto> getUserByUsername(@PathVariable(value = "fullname") String fullname) {
-        User user = userService.getUserByUsername(fullname);
-        UserDto userDto = modelMapper.map(user, UserDto.class);
-        return ResponseEntity.ok().body(userDto);
+    @GetMapping("/get/username/{fullname}")
+    public ResponseEntity<List<UserDto>> getUserByUsername(@PathVariable(value = "fullname") String fullname) {
+        List<User> users = userService.getUserListByUsername(fullname); // Sửa đổi phương thức trong service để trả về danh sách các User thay vì User duy nhất
+        List<UserDto> userDtos = users.stream().map(user -> modelMapper.map(user, UserDto.class)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(userDtos);
     }
 
-    @GetMapping("/get/{email}")
+    @GetMapping("/get/email/{email}")
     public ResponseEntity<UserDto> getUserByEmail(@PathVariable(value = "email") String email) {
         User user = userService.getUserByEmail(email);
         UserDto userDto = modelMapper.map(user, UserDto.class);
         return ResponseEntity.ok().body(userDto);
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
         User user = modelMapper.map(userDto, User.class);
         User newUser = userService.createUser(user);
@@ -72,7 +72,10 @@ public class UserController {
     }
 
     @PostMapping("/update/{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable(value = "id") String userId, @RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> updateUser(@PathVariable(value = "id") Long userId, @RequestBody UserDto userDto) {
+        if (!userId.equals(userDto.getId())) {
+            return ResponseEntity.badRequest().build();
+        }
         User user = modelMapper.map(userDto, User.class);
         User updatedUser = userService.updateUser(user);
         UserDto updatedUserDto = modelMapper.map(updatedUser, UserDto.class);
@@ -80,7 +83,7 @@ public class UserController {
     }
 
     @PostMapping("/delete/{id}")
-    public ResponseEntity<UserDto> deleteUser(@PathVariable(value = "id") String userId) {
+    public ResponseEntity<UserDto> deleteUser(@PathVariable(value = "id") Long userId) {
         userService.deleteUser(userId);
         return ResponseEntity.ok().build();
     }

@@ -8,9 +8,9 @@ public interface UserService {
 
     List <User> getAllUsers ();
 
-    User getUserById (String id);
+    User getUserById (Long id);
 
-    User getUserByUsername (String fullname);
+    List <User> getUserListByUsername (String fullname);
 
     User getUserByEmail (String email);
 
@@ -18,6 +18,6 @@ public interface UserService {
 
     User updateUser (User user);
 
-    void deleteUser (String id);
+    void deleteUser (Long id);
 
 }
