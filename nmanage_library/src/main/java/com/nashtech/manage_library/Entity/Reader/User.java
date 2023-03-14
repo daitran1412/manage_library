@@ -1,10 +1,16 @@
 package com.nashtech.manage_library.Entity.Reader;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+
+import com.nashtech.manage_library.Entity.Account.UserAccount;
+
 import jakarta.persistence.Column;
 
 import lombok.Getter;
@@ -36,5 +42,9 @@ public class User {
 
     @Column(name = "address")
     private String address;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_account_id")
+    private UserAccount userAccount;
 
 }

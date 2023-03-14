@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserAccount {
     
-    private String id;
+    private Long id;
     private String username;
     private String password;
     private String role;
