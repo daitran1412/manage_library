@@ -7,10 +7,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import com.nashtech.manage_library.Entity.Account.UserAccount;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 
 import lombok.Getter;
@@ -42,9 +47,5 @@ public class User {
 
     @Column(name = "address")
     private String address;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_account_id")
-    private UserAccount userAccount;
 
 }

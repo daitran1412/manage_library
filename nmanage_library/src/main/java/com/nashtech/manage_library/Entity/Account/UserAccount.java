@@ -1,5 +1,7 @@
 package com.nashtech.manage_library.Entity.Account;
 
+import com.nashtech.manage_library.Entity.Reader.User;
+
 import jakarta.persistence.*;
 
 import lombok.Getter;
@@ -20,6 +22,8 @@ public class UserAccount {
     @Column(name = "id")
     private Long id;
 
+    // private Long id;
+
     @Column(name = "username")
     private String username;
 
@@ -31,5 +35,10 @@ public class UserAccount {
 
     @Column(name = "status")
     private String status;
+
+    // foreign key to user table
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }

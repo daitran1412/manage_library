@@ -4,7 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
 
-import com.nashtech.manage_library.dto.Account.UserAccount;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.nashtech.manage_library.dto.Account.UserAccountDto;
 
 import lombok.AllArgsConstructor;
 
@@ -19,6 +22,4 @@ public class UserDto {
     private String email;
     private String phone;
     private String address;
-    private UserAccount userAccount;
-
 }
