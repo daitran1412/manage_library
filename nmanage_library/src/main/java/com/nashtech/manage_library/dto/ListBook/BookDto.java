@@ -3,6 +3,9 @@ package com.nashtech.manage_library.dto.ListBook;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 
 @Getter
@@ -15,7 +18,7 @@ public class BookDto {
     private String name;
     private String author;
     private String publisher;
-    private String category;
+    List<String> category;
     private String status;
     private String quantity;
     private String description;
