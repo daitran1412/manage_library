@@ -1,6 +1,9 @@
 package com.nashtech.manage_library.service.impl;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.nashtech.manage_library.Entity.ListBook.Book;
 import com.nashtech.manage_library.Entity.ListBook.Category;
 import com.nashtech.manage_library.repository.ListBook.BookRepository;
+import com.nashtech.manage_library.repository.ListBook.CategoryRepository;
 import com.nashtech.manage_library.service.BookService;
 import com.nashtech.manage_library.service.CategoryService;
 
@@ -16,6 +20,9 @@ public class BookServiceImp implements BookService {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override
     public List<Book> getAllBooks() {
@@ -47,11 +54,27 @@ public class BookServiceImp implements BookService {
         return bookRepository.findById(bookId).orElse(null);
     }
 
-    @Override
+    
     public Book createBook(Book book) {
+        Set<Category> categories = book.getCategory();
+        Set<Category> existingCategories = new HashSet<>();
+        if (categories == null) {
+            categories = new HashSet<>();
+            book.setCategory(categories);
+        }
+        categories.add(category);
+        for (Category category : categories) {
+            Optional<Category> existingCategory = categoryRepository.findByName(category.getName());
+            if (existingCategory.isPresent()) {
+                existingCategories.add(existingCategory.get());
+            } else {
+                existingCategories.add(category);
+            }
+        }
+        book.setCategory(existingCategories);
+
         return bookRepository.save(book);
     }
-
     @Override
     public void deleteBook(Long bookId) {
         bookRepository.deleteById(bookId);

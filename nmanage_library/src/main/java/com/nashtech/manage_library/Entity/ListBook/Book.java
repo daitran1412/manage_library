@@ -2,7 +2,9 @@ package com.nashtech.manage_library.Entity.ListBook;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,9 +42,9 @@ public class Book {
     @Column(name = "publisher")
     private String publisher;
 
-    @ManyToMany
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "book_category", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private List<Category> category = new ArrayList<>();
+    private Set<Category> category;
 
     @Column(name = "description")
     private String description;

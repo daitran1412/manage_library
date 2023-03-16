@@ -1,5 +1,7 @@
 package com.nashtech.manage_library.Entity.ListBook;
 
+import java.util.Set;
+
 import jakarta.persistence.*;
 
 import lombok.Getter;
@@ -22,5 +24,8 @@ public class Category {
 
     @Column(name = "name")
     private String name;
+
+    @ManyToMany(mappedBy = "category")
+    private Set<Book> book;
 
 }
