@@ -58,11 +58,6 @@ public class BookServiceImp implements BookService {
     public Book createBook(Book book) {
         Set<Category> categories = book.getCategory();
         Set<Category> existingCategories = new HashSet<>();
-        if (categories == null) {
-            categories = new HashSet<>();
-            book.setCategory(categories);
-        }
-        categories.add(category);
         for (Category category : categories) {
             Optional<Category> existingCategory = categoryRepository.findByName(category.getName());
             if (existingCategory.isPresent()) {
