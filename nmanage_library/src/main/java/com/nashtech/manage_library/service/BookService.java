@@ -3,6 +3,7 @@ package com.nashtech.manage_library.service;
 import java.util.List;
 
 import com.nashtech.manage_library.Entity.ListBook.Book;
+import com.nashtech.manage_library.dto.ListBook.BookDto;
 
 public interface BookService {
 
@@ -18,7 +19,7 @@ public interface BookService {
 
     Book getBookById (Long bookId);
 
-    Book createBook (Book book);    
+    Book createBook (BookDto bookDto);    
 
     void deleteBook (Long bookId);
     

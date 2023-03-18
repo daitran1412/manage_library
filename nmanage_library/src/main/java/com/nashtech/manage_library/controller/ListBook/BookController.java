@@ -45,8 +45,7 @@ public class BookController {
 
     @PostMapping("/create")
     public BookDto createBook(@RequestBody BookDto bookDto) {
-        Book book = modelMapper.map(bookDto, Book.class);
-        Book createdBook = bookService.createBook(book);
+        Book createdBook = bookService.createBook(bookDto);
         BookDto createdBookDto = modelMapper.map(createdBook, BookDto.class);
         return createdBookDto;
     }

@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 import lombok.AllArgsConstructor;
 
@@ -18,7 +19,7 @@ public class BookDto {
     private String name;
     private String author;
     private String publisher;
-    List<String> category;
+    Set <String> categoriesName;
     private String status;
     private String quantity;
     private String description;

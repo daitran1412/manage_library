@@ -7,9 +7,12 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.modelmapper.ModelMapper;
+
 
 import com.nashtech.manage_library.Entity.ListBook.Book;
 import com.nashtech.manage_library.Entity.ListBook.Category;
+import com.nashtech.manage_library.dto.ListBook.BookDto;
 import com.nashtech.manage_library.repository.ListBook.BookRepository;
 import com.nashtech.manage_library.repository.ListBook.CategoryRepository;
 import com.nashtech.manage_library.service.BookService;
@@ -23,6 +26,9 @@ public class BookServiceImp implements BookService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private ModelMapper modalMapper;
 
     @Override
     public List<Book> getAllBooks() {
@@ -54,20 +60,23 @@ public class BookServiceImp implements BookService {
         return bookRepository.findById(bookId).orElse(null);
     }
 
-    
-    public Book createBook(Book book) {
-        Set<Category> categories = book.getCategory();
-        Set<Category> existingCategories = new HashSet<>();
-        for (Category category : categories) {
-            Optional<Category> existingCategory = categoryRepository.findByName(category.getName());
+    @Override
+    public Book createBook(BookDto bookDto) {
+        Book book = modalMapper.map(bookDto, Book.class);
+        book.setCategory(new HashSet<>());
+        bookDto.getCategoriesName().forEach(category -> {
+            Optional<Category> existingCategory = categoryRepository.findByName(category);
+            System.out.println("existingCategory: " + existingCategory.isPresent());
             if (existingCategory.isPresent()) {
-                existingCategories.add(existingCategory.get());
-            } else {
-                existingCategories.add(category);
-            }
-        }
-        book.setCategory(existingCategories);
+                book.getCategory().add(existingCategory.get());
 
+            } else {
+                Category newCategory = new Category();
+                newCategory.setName(category);
+                categoryRepository.save(newCategory);
+                book.getCategory().add(newCategory);
+            }
+        });
         return bookRepository.save(book);
     }
     @Override
