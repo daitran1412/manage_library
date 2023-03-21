@@ -1,0 +1,13 @@
+{
+  "name": "Hary",
+  "authorsName": ["Author name 1", "Author name 2"],
+  "publisher": "Publisher name",
+  "categoriesName": [
+    "Science Fiction 1",
+    "Category "
+  ],
+  "description": "Book description",
+  "quantity": 5,
+  "status": "Available",
+  "image": "book.jpg"
+}

@@ -54,7 +54,5 @@ public class BookController {
     public void deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
     }
-
     
-
 }

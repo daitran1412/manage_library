@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.nashtech.manage_library.Entity.Reader.BorrowRecord;
-import com.nashtech.manage_library.repository.Reader.BorrowRecordRepository;
+import com.nashtech.manage_library.Entity.Publish.BorrowRecord;
+import com.nashtech.manage_library.repository.Publish.BorrowRecordRepository;
 import com.nashtech.manage_library.service.BorrowRecordService;
 
 @Service

@@ -2,7 +2,7 @@ package com.nashtech.manage_library.service;
 
 import java.util.List;
 
-import com.nashtech.manage_library.Entity.Reader.BorrowRecord;
+import com.nashtech.manage_library.Entity.Publish.BorrowRecord;
 
 public interface BorrowRecordService {
 

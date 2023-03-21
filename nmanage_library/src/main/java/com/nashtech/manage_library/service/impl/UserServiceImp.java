@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nashtech.manage_library.Entity.Account.UserAccount;
 import com.nashtech.manage_library.Entity.Reader.User;
 import com.nashtech.manage_library.repository.Reader.UserRepository;
 import com.nashtech.manage_library.service.UserService;

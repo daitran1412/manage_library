@@ -3,20 +3,21 @@ package com.nashtech.manage_library.service.impl;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.modelmapper.ModelMapper;
 
-
 import com.nashtech.manage_library.Entity.ListBook.Book;
 import com.nashtech.manage_library.Entity.ListBook.Category;
+import com.nashtech.manage_library.Entity.Reader.Author;
 import com.nashtech.manage_library.dto.ListBook.BookDto;
+import com.nashtech.manage_library.dto.ListBook.CategoryDto;
+import com.nashtech.manage_library.dto.Reader.AuthorDto;
 import com.nashtech.manage_library.repository.ListBook.BookRepository;
 import com.nashtech.manage_library.repository.ListBook.CategoryRepository;
+import com.nashtech.manage_library.repository.Reader.AuthorRepository;
 import com.nashtech.manage_library.service.BookService;
-import com.nashtech.manage_library.service.CategoryService;
 
 @Service
 public class BookServiceImp implements BookService {
@@ -26,6 +27,9 @@ public class BookServiceImp implements BookService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private AuthorRepository authorRepository;
 
     @Autowired
     private ModelMapper modalMapper;
@@ -64,17 +68,27 @@ public class BookServiceImp implements BookService {
     public Book createBook(BookDto bookDto) {
         Book book = modalMapper.map(bookDto, Book.class);
         book.setCategory(new HashSet<>());
+        book.setAuthor(new HashSet<>());
         bookDto.getCategoriesName().forEach(category -> {
             Optional<Category> existingCategory = categoryRepository.findByName(category);
-            System.out.println("existingCategory: " + existingCategory.isPresent());
             if (existingCategory.isPresent()) {
                 book.getCategory().add(existingCategory.get());
-
             } else {
                 Category newCategory = new Category();
                 newCategory.setName(category);
                 categoryRepository.save(newCategory);
                 book.getCategory().add(newCategory);
+            }
+        });
+        bookDto.getAuthorsName().forEach( author -> {
+            Optional<Author> existingAuthor = authorRepository.findByUsername(author);
+            if (existingAuthor.isPresent()){
+                book.getAuthor().add(existingAuthor.get());
+            } else {
+                Author newAuthor = new Author();
+                newAuthor.setUsername(author);
+                authorRepository.save(newAuthor);
+                book.getAuthor().add(newAuthor);
             }
         });
         return bookRepository.save(book);

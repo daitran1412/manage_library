@@ -1,8 +1,8 @@
 package com.nashtech.manage_library.Entity.ListBook;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
+
+import com.nashtech.manage_library.Entity.Reader.Author;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -33,13 +33,17 @@ public class Book {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "author")
-    private String author;
+    // @Column(name = "author")
+    // private String author;
 
-    @Column(name = "publisher")
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "book_author", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
+    private Set<Author> author;
+    
+    @Column(name = "publisher", nullable = false)
     private String publisher;
 
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
@@ -52,7 +56,7 @@ public class Book {
     @Column(name = "quantity")
     private int quantity;
 
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     private String status;
 
     @Column(name = "image")
