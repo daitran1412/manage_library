@@ -16,7 +16,7 @@ public interface AuthorService {
 
     Author updateAuthor (Author author);
 
-    List <Author> getAuthorsByName (String name);
+    Author getAuthorsByName (String name);
 
     void deleteAuthor (Long authorId);
         

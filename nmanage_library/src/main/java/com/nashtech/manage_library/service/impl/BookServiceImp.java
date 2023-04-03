@@ -10,12 +10,12 @@ import org.modelmapper.ModelMapper;
 
 import com.nashtech.manage_library.Entity.ListBook.Book;
 import com.nashtech.manage_library.Entity.ListBook.Category;
+import com.nashtech.manage_library.Entity.Publish.Publisher;
 import com.nashtech.manage_library.Entity.Reader.Author;
 import com.nashtech.manage_library.dto.ListBook.BookDto;
-import com.nashtech.manage_library.dto.ListBook.CategoryDto;
-import com.nashtech.manage_library.dto.Reader.AuthorDto;
 import com.nashtech.manage_library.repository.ListBook.BookRepository;
 import com.nashtech.manage_library.repository.ListBook.CategoryRepository;
+import com.nashtech.manage_library.repository.Publish.PublisherRepository;
 import com.nashtech.manage_library.repository.Reader.AuthorRepository;
 import com.nashtech.manage_library.service.BookService;
 
@@ -30,6 +30,9 @@ public class BookServiceImp implements BookService {
 
     @Autowired
     private AuthorRepository authorRepository;
+
+    @Autowired
+    private PublisherRepository publisherRepository;
 
     @Autowired
     private ModelMapper modalMapper;
@@ -69,7 +72,10 @@ public class BookServiceImp implements BookService {
         Book book = modalMapper.map(bookDto, Book.class);
         book.setCategory(new HashSet<>());
         book.setAuthor(new HashSet<>());
+        book.setPublisher(new Publisher());
         bookDto.getCategoriesName().forEach(category -> {
+
+            // set category for book
             Optional<Category> existingCategory = categoryRepository.findByName(category);
             if (existingCategory.isPresent()) {
                 book.getCategory().add(existingCategory.get());
@@ -80,6 +86,8 @@ public class BookServiceImp implements BookService {
                 book.getCategory().add(newCategory);
             }
         });
+
+        // set author for book
         bookDto.getAuthorsName().forEach( author -> {
             Optional<Author> existingAuthor = authorRepository.findByUsername(author);
             if (existingAuthor.isPresent()){
@@ -91,6 +99,23 @@ public class BookServiceImp implements BookService {
                 book.getAuthor().add(newAuthor);
             }
         });
+
+        // set publisher for book
+        Optional<Publisher> existingPublisher = publisherRepository.findByName(bookDto.getPublisher());
+        if (existingPublisher.isPresent()) {
+            book.setPublisher(existingPublisher.get());
+        } else {
+            Publisher newPublisher = new Publisher();
+            newPublisher.setName(bookDto.getPublisher());
+            publisherRepository.save(newPublisher);
+            book.setPublisher(newPublisher);
+        }
+        // Publisher newPublisher = new Publisher();
+        // newPublisher.setName(bookDto.getPublisher());
+        // publisherRepository.save(newPublisher);
+        // book.setPublisher(newPublisher);
+    
+
         return bookRepository.save(book);
     }
     @Override

@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import org.modelmapper.ModelMapper;
 
-// import javax.validation.Valid;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,7 +47,7 @@ public class UserController {
         return ResponseEntity.ok().body(userDto);
     }
 
-    @GetMapping("/get/username/{fullname}")
+    @GetMapping("/get/fullname/{fullname}")
     public ResponseEntity<List<UserDto>> getUserByUsername(@PathVariable(value = "fullname") String fullname) {
         List<User> users = userService.getUserListByUsername(fullname); // Sửa đổi phương thức trong service để trả về danh sách các User thay vì User duy nhất
         List<UserDto> userDtos = users.stream().map(user -> modelMapper.map(user, UserDto.class)).collect(Collectors.toList());

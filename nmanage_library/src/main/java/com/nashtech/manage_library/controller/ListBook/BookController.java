@@ -36,7 +36,7 @@ public class BookController {
         return bookDtos;
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/get/id/{id}")
     public BookDto getBookById(@PathVariable Long id) {
         Book book = bookService.getBookById(id);
         BookDto bookDto = modelMapper.map(book, BookDto.class);

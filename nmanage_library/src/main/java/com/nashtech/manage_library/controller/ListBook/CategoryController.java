@@ -36,7 +36,7 @@ public class CategoryController {
         return categoryDtos;
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/get/id/{id}")
     public CategoryDto getCategoryById(@PathVariable Long id) {
         Category category = categoryService.getCategoryById(id);
         CategoryDto categoryDto = modelMapper.map(category, CategoryDto.class);

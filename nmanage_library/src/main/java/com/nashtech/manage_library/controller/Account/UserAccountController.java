@@ -36,7 +36,7 @@ public class UserAccountController {
         return userAccountDtos;
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/get/id/{id}")
     public UserAccountDto getUserAccountById(@PathVariable Long id) {
         UserAccount userAccount = userAccountService.getUserAccountById(id);
         UserAccountDto userAccountDto = modelMapper.map(userAccount, UserAccountDto.class);

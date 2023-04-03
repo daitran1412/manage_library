@@ -39,7 +39,7 @@ public class AuthorController {
         return authorDtos;
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/get/id/{id}")
     public AuthorDto getAuthorById(@PathVariable Long id) {
         Author author = authorService.getAuthorById(id);
         return modelMapper.map(author, AuthorDto.class);

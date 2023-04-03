@@ -11,9 +11,10 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class PublisherDto {
 
-    private String id;
+    private Long id;
     private String name;
     private String address;
     private String phone;
+    private String email;
     
 }

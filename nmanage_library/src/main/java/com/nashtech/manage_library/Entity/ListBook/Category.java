@@ -28,4 +28,9 @@ public class Category {
     @ManyToMany(mappedBy = "category")
     private Set<Book> book;
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
 }

@@ -7,14 +7,11 @@ import com.nashtech.manage_library.Entity.ListBook.Book;
 import jakarta.persistence.*;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "author")
 public class Author extends Person {
     
@@ -26,6 +23,12 @@ public class Author extends Person {
 
     @ManyToMany(mappedBy = "author")
     private Set<Book> book;
+
+    public Author(String username, String dateOfBirth, String address, String phone) {
+        super(username, dateOfBirth, address);
+        this.phone = phone;
+        this.verification = false;
+    }
 
     public void setUsername(String username) {
         super.setUsername(username);
@@ -40,7 +43,7 @@ public class Author extends Person {
     }
 
     public void setVerification() {
-        if (this.username != null && this.dateOfBirth != null && this.address != null) {
+        if (this.username != null && this.dateOfBirth.toString() != null && this.address != null) {
             this.verification = true;
         }
     }

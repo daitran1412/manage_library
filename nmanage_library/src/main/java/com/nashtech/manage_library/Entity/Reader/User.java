@@ -1,11 +1,15 @@
 package com.nashtech.manage_library.Entity.Reader;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+import java.util.Set;
+
+import com.nashtech.manage_library.Entity.Publish.BorrowRecord;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 
 import lombok.Getter;
@@ -26,5 +30,8 @@ public class User extends Person {
 
     @Column(name = "phone", nullable = false)
     private String phone;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<BorrowRecord> borrowRecord;
 
 }

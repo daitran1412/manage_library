@@ -25,20 +25,27 @@ public class UserAccount {
     // private Long id;
 
     @Column(name = "username")
-    private String username;
+    private String username; 
 
     @Column(name = "password")
-    private String password;
+    private String password;   
 
-    @Column(name = "role")
+    @Column(name = "role") // thêm default value
     private String role;
 
-    @Column(name = "status")
+    @Column(name = "status") // thêm default value
     private String status;
 
     // foreign key to user table
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL) //
     @JoinColumn(name = "user_id")
     private User user;
+
+    @Column(name = "token")
+    private String token;
+
+    public UserAccount orElseThrow(Object object) {
+        return null;
+    }
 
 }

@@ -45,8 +45,8 @@ public class AuthorServiceImp implements AuthorService {
     }
 
     @Override
-    public List<Author> getAuthorsByName(String name) {
-        return (List<Author>) authorRepository.findByUsername(name).orElse(null);
+    public Author getAuthorsByName(String name) {
+        return authorRepository.findByUsername(name).orElse(null);
     }
 
     @Override
