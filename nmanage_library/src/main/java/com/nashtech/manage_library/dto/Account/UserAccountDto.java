@@ -21,4 +21,11 @@ public class UserAccountDto {
     private String status;
     private UserDto user;
 
+    public UserAccountDto(String username, String password, String role, String status, UserDto user) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.status = status;
+        this.user = user;
+    }
 }

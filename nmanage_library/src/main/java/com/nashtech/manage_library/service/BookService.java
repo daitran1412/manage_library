@@ -22,5 +22,9 @@ public interface BookService {
     Book createBook (BookDto bookDto);    
 
     void deleteBook (Long bookId);
+
+    void updateBook (Long bookId, BookDto bookDto);
+
+    void borrowBook (Long bookId);
     
 }

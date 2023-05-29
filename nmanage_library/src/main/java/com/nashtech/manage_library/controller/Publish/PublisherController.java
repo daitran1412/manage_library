@@ -2,12 +2,16 @@ package com.nashtech.manage_library.controller.Publish;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
+import com.nashtech.manage_library.Entity.Error.Status;
 import com.nashtech.manage_library.Entity.Publish.Publisher;
 import com.nashtech.manage_library.dto.Publish.PublisherDto;
 import com.nashtech.manage_library.service.PublisherService;
@@ -20,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/v1/publisher")
+@CrossOrigin
 public class PublisherController {
     
     @Autowired
@@ -32,54 +37,66 @@ public class PublisherController {
     }
 
     @GetMapping("/get")
-    public List<PublisherDto> getAllPublisher() {
-        List<PublisherDto> publisherDtos = new ArrayList<>();
+    public ResponseEntity<?> getAllPublishers() {
         List<Publisher> publishers = publisherService.getAllPublishers();
-        for (Publisher publisher : publishers) {
-            publisherDtos.add(modelMapper.map(publisher, PublisherDto.class));
-        }
-        return publisherDtos;
+        List<PublisherDto> publisherDtos = publishers.stream().map(publisher -> modelMapper.map(publisher, PublisherDto.class))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok().body(publisherDtos);
     }
     
 
     @GetMapping("/get/id/{id}")
-    public PublisherDto getPublisherById(@PathVariable Long id) {
+    public ResponseEntity<PublisherDto> getPublisherById(@PathVariable Long id) {
         Publisher publisher = publisherService.getPublisherById(id);
-        return modelMapper.map(publisher, PublisherDto.class);
+        PublisherDto publisherDto = modelMapper.map(publisher, PublisherDto.class);
+        return ResponseEntity.ok().body(publisherDto);
     }
-
 
     // lỗi
     @GetMapping("/get/name/{name}")
-    public PublisherDto getPublisherByName(@PathVariable String name) {
+    // public PublisherDto getPublisherByName(@PathVariable String name) {
+    //     Publisher publisher = publisherService.getPublisherByName(name);
+    //     return modelMapper.map(publisher, PublisherDto.class);
+    // }
+    public ResponseEntity<PublisherDto> getPublisherByName(@PathVariable String name) {
         Publisher publisher = publisherService.getPublisherByName(name);
-        return modelMapper.map(publisher, PublisherDto.class);
+        PublisherDto publisherDto = modelMapper.map(publisher, PublisherDto.class);
+        return ResponseEntity.ok().body(publisherDto);
     }
 
     @PostMapping("/create")
-    public PublisherDto createPublisher(@RequestBody PublisherDto publisherDto) {
+    public ResponseEntity<PublisherDto> createPublisher(@RequestBody PublisherDto publisherDto) {
         Publisher publisher = modelMapper.map(publisherDto, Publisher.class);
         publisherService.createPublisher(publisher);
-        return modelMapper.map(publisher, PublisherDto.class);
+        PublisherDto publisherDto1 = modelMapper.map(publisher, PublisherDto.class);
+        return ResponseEntity.ok().body(publisherDto1);
     }
 
     @PostMapping("/update/{id}")
-    public PublisherDto updatePublisher(@PathVariable Long id, @RequestBody PublisherDto publisherDto) {
+    public ResponseEntity<PublisherDto> updatePublisher(@PathVariable Long id, @RequestBody PublisherDto publisherDto) {
         Publisher publisher = modelMapper.map(publisherDto, Publisher.class);
         publisherService.updatePublisher(publisher);
-        return modelMapper.map(publisher, PublisherDto.class);
+        PublisherDto publisherDto1 = modelMapper.map(publisher, PublisherDto.class);
+        return ResponseEntity.ok().body(publisherDto1);
     }
 
     @PostMapping("/delete/id/{id}")
-    public void deletePublisher(@PathVariable Long id) {
+    public ResponseEntity<?> deletePublisher(@PathVariable Long id) {
         publisherService.deletePublisher(id);
+        Status status = new Status();
+        status.setMessage("Delete success");
+        return ResponseEntity.ok().body(status);
     }
 
     // Lỗi
     @PostMapping("/delete/name/{name}")
-    public void deletePublisher(@PathVariable String name) {
+    // public void deletePublisher(@PathVariable String name) {
+    //     Publisher publisher = publisherService.getPublisherByName(name);
+    //     publisherService.deletePublisher(publisher.getId());
+    // }
+    public ResponseEntity<String> deletePublisher(@PathVariable String name) {
         Publisher publisher = publisherService.getPublisherByName(name);
         publisherService.deletePublisher(publisher.getId());
+        return ResponseEntity.ok().body("Delete success");
     }
-
 }

@@ -20,7 +20,7 @@ public class BookDto {
     private String publisher;
     Set <String> categoriesName;
     private String status;
-    private String quantity;
+    private int quantity;
     private String description;
     private String image;
     

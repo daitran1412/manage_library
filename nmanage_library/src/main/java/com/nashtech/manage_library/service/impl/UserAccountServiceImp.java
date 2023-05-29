@@ -25,12 +25,16 @@ public class UserAccountServiceImp implements UserAccountService {
     private static final String jwtSecret = JwtSecretGenerator.generateSecret();
 
     @Override
-    public UserAccount createUserAccount(UserAccount UserAccount) {
-        return userAccountRepository.save(UserAccount);
+    public UserAccount createUserAccount(UserAccount userAccount) {
+        userAccount.setStatus("active");
+        if (userAccount.getRole() == null) {
+            userAccount.setRole("USER");
+        }
+        return userAccountRepository.save(userAccount);
     }
 
     @Override
-    public UserAccount updateUserAccount(UserAccount UserAccount){ 
+    public UserAccount updateUserAccount(UserAccount UserAccount) {
         UserAccount existingUserAccount = userAccountRepository.findById(UserAccount.getUser().getId()).orElse(null);
         existingUserAccount.setUsername(UserAccount.getUsername());
         existingUserAccount.setPassword(UserAccount.getPassword());
@@ -69,23 +73,24 @@ public class UserAccountServiceImp implements UserAccountService {
     @Override
     public UserAccount authenticate(UserAccount userAccount) throws Exception {
         // validate username and password
-        if (userAccount.getUsername() == null || userAccount.getUsername().isEmpty() || userAccount.getPassword() == null
+        if (userAccount.getUsername() == null || userAccount.getUsername().isEmpty()
+                || userAccount.getPassword() == null
                 || userAccount.getPassword().isEmpty()) {
             throw new Exception("Invalid username or password");
         }
-        UserAccount existingUserAccount = userAccountRepository.findByUsernameAndPassword(userAccount.getUsername(), userAccount.getPassword());
+        UserAccount existingUserAccount = userAccountRepository.findByUsernameAndPassword(userAccount.getUsername(),
+                userAccount.getPassword());
         if (existingUserAccount == null) {
             throw new Exception("Invalid username or password");
         }
         String token = Jwts.builder()
-                        .setSubject(existingUserAccount.getUsername())
-                        .setIssuedAt(new Date())
-                        .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
-                        .signWith(SignatureAlgorithm.HS512, jwtSecret)
-                        .compact();
+                .setSubject(existingUserAccount.getUsername())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .compact();
         existingUserAccount.setToken(token);
         return existingUserAccount;
     }
-    
-    
+
 }

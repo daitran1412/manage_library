@@ -122,5 +122,61 @@ public class BookServiceImp implements BookService {
     public void deleteBook(Long bookId) {
         bookRepository.deleteById(bookId);
     }
+
+    @Override
+    public void updateBook (Long bookId, BookDto bookDto){
+        Book existingBook = bookRepository.findById(bookId).orElse(null);
+        if (existingBook != null) {
+            existingBook.setName(bookDto.getName());
+            existingBook.setAuthor(new HashSet<>());
+            existingBook.setCategory(new HashSet<>());
+            existingBook.setPublisher(new Publisher());
+            existingBook.setDescription(bookDto.getDescription());
+            existingBook.setImage(bookDto.getImage());
+            existingBook.setQuantity(bookDto.getQuantity());
+            existingBook.setStatus(bookDto.getStatus());
+            bookDto.getCategoriesName().forEach(category -> {
+                Optional<Category> existingCategory = categoryRepository.findByName(category);
+                if (existingCategory.isPresent()) {
+                    existingBook.getCategory().add(existingCategory.get());
+                } else {
+                    Category newCategory = new Category();
+                    newCategory.setName(category);
+                    categoryRepository.save(newCategory);
+                    existingBook.getCategory().add(newCategory);
+                }
+            });
+            bookDto.getAuthorsName().forEach( author -> {
+                Optional<Author> existingAuthor = authorRepository.findByUsername(author);
+                if (existingAuthor.isPresent()){
+                    existingBook.getAuthor().add(existingAuthor.get());
+                } else {
+                    Author newAuthor = new Author();
+                    newAuthor.setUsername(author);
+                    authorRepository.save(newAuthor);
+                    existingBook.getAuthor().add(newAuthor);
+                }
+            });
+            Optional<Publisher> existingPublisher = publisherRepository.findByName(bookDto.getPublisher());
+            if (existingPublisher.isPresent()) {
+                existingBook.setPublisher(existingPublisher.get());
+            } else {
+                Publisher newPublisher = new Publisher();
+                newPublisher.setName(bookDto.getPublisher());
+                publisherRepository.save(newPublisher);
+                existingBook.setPublisher(newPublisher);
+            }
+            bookRepository.save(existingBook);
+        }
+    }
+
+    @Override
+    public void borrowBook(Long bookId) {
+        Book existingBook = bookRepository.findById(bookId).orElse(null);
+        if (existingBook != null) {
+            existingBook.setQuantity(existingBook.getQuantity() - 1);
+            bookRepository.save(existingBook);
+        }
+    }
     
 }

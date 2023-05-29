@@ -3,7 +3,6 @@ package com.nashtech.manage_library.Entity.Reader;
 import java.time.LocalDate;
 
 import lombok.Getter;
-import lombok.Setter;
 import jakarta.persistence.*;
 
 @Getter
@@ -19,11 +18,11 @@ public class Person {
     @Column(name = "username", nullable = false)
     protected String username;
 
-    @Column(name = "date of birth")
-    protected LocalDate dateOfBirth;
+    @Column(name = "date of birth", columnDefinition = "DATE default '2000-01-01'") // default value
+    protected LocalDate dateOfBirth = LocalDate.parse("2000-01-01");
 
-    @Column(name = "address")
-    protected String address;
+    @Column(name = "address", columnDefinition = "varchar(100) default 'unknown'")
+    protected String address = "unknown";
 
     public Person() {
     }

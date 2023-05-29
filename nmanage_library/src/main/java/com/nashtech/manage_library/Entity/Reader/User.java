@@ -7,6 +7,7 @@ import jakarta.persistence.Table;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.nashtech.manage_library.Entity.Publish.BorrowRecord;
 
 import jakarta.persistence.CascadeType;
@@ -23,6 +24,7 @@ import lombok.AllArgsConstructor;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User extends Person {
     
     @Column(name = "email", nullable = false)

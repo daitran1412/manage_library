@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "author")
 public class Author extends Person {
     
-    @Column(name = "phone", nullable = true)
-    private String phone;
+    @Column(name = "phone", columnDefinition = "varchar(20) default 'unknown'")
+    private String phone = "unknown";
 
     @Column(name = "verification", columnDefinition = "boolean default false")
     private boolean verification;
@@ -43,7 +43,8 @@ public class Author extends Person {
     }
 
     public void setVerification() {
-        if (this.username != null && this.dateOfBirth.toString() != null && this.address != null) {
+        if (this.username != null && !this.username.equals("unknown") && this.address != null
+                && !this.address.equals("unknown") && this.phone != null && !this.phone.equals("unknown")) {
             this.verification = true;
         }
     }

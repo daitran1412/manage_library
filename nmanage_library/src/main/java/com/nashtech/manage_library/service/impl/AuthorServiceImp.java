@@ -9,6 +9,9 @@ import com.nashtech.manage_library.Entity.Reader.Author;
 import com.nashtech.manage_library.repository.Reader.AuthorRepository;
 import com.nashtech.manage_library.service.AuthorService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class AuthorServiceImp implements AuthorService {
 
@@ -17,6 +20,7 @@ public class AuthorServiceImp implements AuthorService {
 
     @Override
     public List<Author> getAllAuthors() {
+        log.info("Get all authors: {}", authorRepository.findAll(), "test;)");
         return authorRepository.findAll();
     }
 
